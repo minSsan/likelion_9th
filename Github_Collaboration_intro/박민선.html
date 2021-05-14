@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- 부트스트랩 css -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <title>박민선</title>
+    <style>
+      @font-face{
+        src:url("./minseon/NanumSquare_acB.ttf");
+        font-family: "Nanum_B";
+      }
+
+      body{
+        background-color: burlywood;
+      }
+
+      .title_bg{
+        padding: 10px;
+        height: 300px;
+      }
+      .title_img{
+        height: 300px;
+      }
+
+      .main{
+        font-family: "Nanum_B";
+      }
+      .card-group{
+        margin-top: 30px;
+      }
+      .card-img-top{
+        height: 250px;
+      }
+      
+      .profile{
+        background-color:rgb(240, 213, 179);
+        font-family: "Nanum_B";
+        margin-top: 20px;
+      }
+      #profile_img{
+        width: 200px;
+        height: 200px;
+      }
+      .about{
+        padding: 20px;
+      }
+
+      .todo_list{
+        padding: 10px;
+        background-color: white;
+      }
+      #todo_list_title{
+        font-family: "Nanum_B";
+      }
+
+      .footer{
+        font-size: 10px;
+        margin-top: 20px;
+        background-color: white;
+      }
+    </style>
+</head>
+<body>
+  <div class="container-fluid text-center title_bg">
+    <div class="row">
+      <div class="col-sm-4">
+        <img src="./minseon/title_img.jpg" class="img-fluid title_img">
+      </div>
+      <div class="col-sm-4">
+        <img src="./minseon/title_img2.png" class="img-fluid title_img">
+      </div>
+      <div class="col-sm-4">
+        <img src="./minseon/title_img3.jpg" class="img-fluid title_img">
+      </div>
+    </div>  
+  </div>
+
+  <div class="container-fluid text-center main">
+    <div class="card-group">
+      <div class="card">
+        <img src="./minseon/project1.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">제 2회 창업 앱 메이커톤</h5>
+          <p class="card-text">개발자로 참여하여 팀 내에서 안드로이드 스튜디오-JAVA 를 사용해 안드로이드 앱을 제작했습니다.<br>
+            프로젝트를 진행하면서 새로운 사람들과 소통하고 만나면서 많은 것들을 배울 수 있었습니다.<br>
+            실력이 부족한 상황에서 대회에 참여를 했었기 때문에, 다음에 참여할 때는 프로젝트에 더 많이 기여할 수 있으면 좋겠습니다.<br>
+            ... <a href="https://github.com/hozzijeong/FundingTalk" target="_blank">more</a></p>
+          <p class="card-text"><small class="text-muted">2020.08</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./minseon/project2.jpg" height="150px" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">깃허브</h5>
+          <p class="card-text">여기에는 딱히 올릴게 생각이 안 나서 제 깃허브 주소 올립니다! 앞으로 더 다양한 프로젝트 경험 쌓도록 노력하겠습니다!<br>
+          <a href="https://github.com/minSsan" target="_blank">@minSsan</a></p>
+          <p class="card-text"><small class="text-muted">2020 ~</small></p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="./minseon/project3.png" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">멋쟁이 사자처럼 9기</h5>
+          <p class="card-text">멋쟁이 사자처럼에서 웹 개발을 배우고 이를 통해 제가 원하는 서비스를 직접 구현해보며, 서비스 기획/운영과 웹 개발에 대해서 많이 배우고 싶어서 참여하게 되었습니다.<br>
+          앞으로 멋쟁이 사자처럼에서 많은 경험 쌓아나가고 싶습니다! :D</p>
+          <p class="card-text"><small class="text-muted">2021</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid text-center profile">
+    <h4 style="font-weight: bold;">Minseon</h4>
+    <img src="./minseon/pms.jpg" id="profile_img" class="rounded-circle">
+    <p style="padding-top: 10px;">ABOUT ME</p>
+    <p class="about">생년월일: 2000.11.25<br>
+      싫어하는 음식: 오이 번데기 홍어<br>
+      지금 하고싶은 것: 놀이공원 가기 / 한강 가기 / 해외여행 가기<br>
+      올해 목표: 운동해서 살 찌우기
+    </p>
+  </div>
+
+  <div class="container-fluid text-center todo_list">
+    <div id="todo_list_title">
+      <h3 class="py-3">나의 버킷 리스트</h3>
+    </div>
+    <div class="list-group">
+      <label class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="">
+        혼자서 제주도 여행 가보기
+      </label>
+      <label class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="">
+        교환학생 가기
+      </label>
+      <label class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="">
+        해외여행 (퀘백 뉴욕 파리 등등..)
+      </label>
+      <label class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="">
+        스카이 다이빙
+      </label>
+      <label class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="">
+        훌륭한 웹 개발자 되기 :D
+      </label>
+    </div>
+  </div>
+
+  <div class="container-fluid footer">
+    <p>@박민선<br>
+    Email | msp1125@hanyang.ac.kr<br>
+    School | Hanyang Univ. ERICA<br>
+    Instagram | @minsan1125<br>
+    Github | @minSsan</p>
+  </div>
+</body>
+</html>
