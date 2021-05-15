@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail page</title>
+</head>
+<body>
+    <p>{{title}}</p>
+    <p>{{writer}}</p>
+    <p>{{pub_date}}</p>
+    <p>{{body}}</p>
+    <a href="{% url 'update_page' id %}">글 수정하기</a>
+    <a href="{% url 'delete' id %}">삭제</a>
+</body>
+</html>
