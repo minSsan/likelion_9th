@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Albamon</title>
+</head>
+<style>
+    body {
+        text-align: center;
+    }
+</style>
+<body>
+    <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="...">
+    <h3>List</h3>
+    {% for store in stores %}
+        <p>{{store.name}}</p>
+        <a href="{% url 'detail' store.id %}">more</a><br>
+    {% endfor %}
+    <a href="{% url 'create_page' %}">모집글 올리기</a>
+</body>
+</html>
