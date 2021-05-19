@@ -12,14 +12,34 @@
     body {
         text-align: center;
     }
+    a {
+        color: black;
+        text-decoration: none;
+    }
 </style>
 <body>
-    <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="...">
-    <h3>List</h3>
-    {% for store in stores %}
-        <p>{{store.name}}</p>
-        <a href="{% url 'detail' store.id %}">more</a><br>
-    {% endfor %}
-    <a href="{% url 'create_page' %}">모집글 올리기</a>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="..." width="500px">
+        </a>
+    </header>
+    <main>
+        <h2 style="padding: 25px;">모집공고 리스트</h2>
+        <ul class="list-group" style="padding: 25px 500px 50px 500px;">
+            {% for store in stores %}
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto" style="text-align: left;">
+                        <div class="fw-bold">
+                            <a href="{% url 'detail' store.id %}" style="font-size: 30px; text-decoration: none;">{{store.name}}</a>
+                        </div>
+                        시급 <strong>{{store.wage}}원</strong><br>
+                        지역 <strong>{{store.location}}</strong>
+                    </div>
+                    <span class="badge rounded-pill bg-warning text-dark">{{store.applicant}}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <a class="btn btn-outline-primary" href="{% url 'create_page' %}">모집공고 올리기</a>
+    </main>
 </body>
 </html>

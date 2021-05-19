@@ -12,37 +12,81 @@
     body {
         text-align: center;
     }
+    table {
+        table-layout: fixed;
+    }
+    span {
+        display: inline-block;
+    }
 </style>
 <body>
-    <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="...">
-    <p>Name</p>
-    <p>{{name}}</p>
-    <br>
-    <p>Job Area</p>
-    <p>{{job_area}}</p>
-    <br>
-    <p>Detail</p>
-    <div>
-        <p>{{detail}}</p>
-    </div>
-    <br>
-    <p>Location</p>
-    <p>{{location}}</p>
-    <br>
-    <p>Wage</p>
-    <p>{{wage}}</p>
-    <br>
-    <p>Job</p>
-    <div>
-        <p>{{job}}</p>
-    </div>
-    <br>
-    <p>Applicant</p>
-    <p>{{applicant}}</p>
-    <br>
-    <a href="{% url 'apply' id %}">apply</a>
-    <a href="{% url 'cancel' id %}">cancel</a>
-    <a href="{% url 'modify_page' id %}">수정하기</a>
-    <a href="{% url 'delete' id %}">삭제하기</a>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="..." width="500px">
+        </a>
+    </header>
+    <div style="height: 20px;"></div>
+    <main>
+        <div style="padding: 50px 500px 50px 500px;">
+            <table class="table caption-top">
+                <h2 style="text-align: left;"><strong>{{name}}</strong></h2>
+                <a href="{% url 'modify_page' id %}" class="btn btn-outline-dark">수정하기</a>
+                <span style="width: 30px;"></span>
+                <a href="{% url 'delete' id %}" class="btn btn-outline-secondary">삭제하기</a>
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">구인지역</th>
+                    <td>{{job_area}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="overflow-visible">세부사항</th>
+                    <td>{{detail}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">장소</th>
+                    <td>{{location}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">시급</th>
+                    <td>{{wage}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="overflow-visible">하는 일</th>
+                    <td>{{job}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div style="padding: 0px 500px 00px 500px;">
+            <table class="table caption-top">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">지원현황</th>
+                    <td>{{applicant}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div height="50px"></div>
+        <a href="{% url 'apply' id %}" class="btn btn-dark">지원하기</a>
+        <a href="{% url 'cancel' id %}" class="btn btn-secondary">지원취소</a>
+    </main>
+    <footer style="text-align: left; margin-top: 10px;">
+        <div>
+            <p>github: @minSsan</p>
+        </div>
+    </footer>
 </body>
 </html>
