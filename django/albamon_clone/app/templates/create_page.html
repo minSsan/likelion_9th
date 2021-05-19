@@ -7,18 +7,54 @@
     <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Create_page</title>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="...">
-    <form action="{% url 'upload' %}" method="post">
-        {% csrf_token %}
-        <p>가게이름: <input type="text" name="name"></p>
-        <p>구인지역: <input type="text" name="job_area"></p>
-        <p>알바 상세정보: <textarea name="detail" cols="30" rows="10"></textarea></p>
-        <p>위치: <input type="text" name="location"></p>
-        <p>시급: <input type="number" name="wage"></p>
-        <p>하는 일: <textarea name="job" cols="30" rows="10"></textarea></p>
-        <button type="submit">업로드</button>
-    </form>
+    <header>
+        <a href="{% url 'home' %}">
+            <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="..." width="500px">
+        </a>
+    </header>
+    <main>
+        <form action="{% url 'upload' %}" method="post" style="padding: 100px 500px 100px 500px;">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">가게이름</span>
+                <input type="text" name="name" class="form-control">
+            </div>
+              
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon2">구인지역</span>
+                <input type="text" name="job_area" class="form-control">
+            </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">아르바이트 상세정보</span>
+                <textarea name="detail" class="form-control"></textarea></p>
+            </div>
+              
+            <div class="input-group mb-3">
+                <span class="input-group-text">위치</span>
+                <input type="text" name="location" class="form-control">
+            </div>
+              
+            <div class="input-group mb-3">
+                <span class="input-group-text">시급</span>
+                <input type="number" name="wage" class="form-control" style="text-align: right;">
+                <span class="input-group-text">원</span>
+            </div>
+              
+            <div class="input-group">
+                <span class="input-group-text">하는 일</span>
+                <textarea name="job" class="form-control"></textarea>
+            </div>
+            <div style="height: 30px;"></div>
+            <button type="submit" class="btn btn-warning">업로드</button>
+        </form>
+    </main>
 </body>
 </html>
