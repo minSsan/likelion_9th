@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Details</title>
+</head>
+<style>
+    body {
+        text-align: center;
+    }
+</style>
+<body>
+    <img src="http://img.albamon.kr/sns_img/2021/02/pywwgo09170241.png" class="img-fluid" alt="...">
+    <p>Name</p>
+    <p>{{name}}</p>
+    <br>
+    <p>Job Area</p>
+    <p>{{job_area}}</p>
+    <br>
+    <p>Detail</p>
+    <div>
+        <p>{{detail}}</p>
+    </div>
+    <br>
+    <p>Location</p>
+    <p>{{location}}</p>
+    <br>
+    <p>Wage</p>
+    <p>{{wage}}</p>
+    <br>
+    <p>Job</p>
+    <div>
+        <p>{{job}}</p>
+    </div>
+    <br>
+    <p>Applicant</p>
+    <p>{{applicant}}</p>
+    <br>
+    <a href="{% url 'apply' id %}">apply</a>
+    <a href="{% url 'cancel' id %}">cancel</a>
+    <a href="{% url 'modify_page' id %}">수정하기</a>
+    <a href="{% url 'delete' id %}">삭제하기</a>
+</body>
+</html>
