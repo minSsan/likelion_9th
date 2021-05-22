@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from app.views import *
 
+from django.conf import settings
+from django.conf.urls.static import static
+#장고 미디어 파일을 사용하기 위해 import부분 추가
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name = "home"),
@@ -26,4 +30,8 @@ urlpatterns = [
     path('update_page/<int:id>', update_page, name = "update_page"),
     path('update/<int:id>', update, name="update"),
     path('delete/<int:id>', delete, name="delete"),
+    path('detail/<int:id>/comments/create/', create_comment, name="create_comment"),
+    path('detail/<int:id>/comments/delete/<int:comment_id>', delete_comment, name='delete_comment'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

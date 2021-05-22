@@ -5,13 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>detail page</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+        }
+        .post {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p>{{title}}</p>
-    <p>{{writer}}</p>
-    <p>{{pub_date}}</p>
-    <p>{{body}}</p>
-    <a href="{% url 'update_page' id %}">글 수정하기</a>
-    <a href="{% url 'delete' id %}">삭제</a>
+    <header>
+        <p style="font-size: 70px; font-weight: bold;">Blog</p>
+    </header>
+    <nav>
+        <a href="{% url 'home' %}">목록으로</a>
+    </nav>
+    <main>
+        <div class="post" >
+            <p style="font-size: 20px;"><strong>{{title}}</strong></p>
+            <p>작성자: {{writer}} | 게시일: {{pub_date}}</p>
+            <img src="{{image.url}}" height=300>
+            <p>{{body}}</p>
+        </div>
+        <div>
+            <a href="{% url 'update_page' id %}">글 수정하기</a>
+            <br>
+            <a href="{% url 'delete' id %}">삭제</a>
+        </div>
+        <div>
+            <h4>----------- 댓글 -----------</h4>
+            {% for comment in comments %}
+                <p> {{comment.user}}({{comment.date}})<br>{{comment.content}}</p>
+                <a href="{% url 'delete_comment' id comment.id %}">삭제</a>
+            {% endfor %}
+        </div>
+
+        <h4>----------- 댓글 작성하기 -----------</h4>
+        <form action="{% url 'create_comment' id %}" method="POST">
+            {% csrf_token %} <!-- csrf 공격을 막아줌 -->
+            <p>사용자: <input type="text" name="user"></p>
+            <p>내용: <input type="text" name="content"></p>
+            <button type="submit">작성</button>
+        </form>
+    </main>
 </body>
 </html>
