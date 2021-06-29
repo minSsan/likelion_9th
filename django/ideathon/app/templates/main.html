@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        {% endblock %}
+    </head>
+    {% block content %}
+    <!-- 병원 검색 메뉴 컨테이너 -->
+        <div class="menu-container">
+            <div class="menu-wrapper">
+                <a class="menu-item" href="">
+                    <div class="image">
+                        <img src="../static/img/embulance.png" style="width: 3.3vw; height: 5vh;" alt="">
+                    </div>
+                    <div class="top-title">
+                        <p>내 주변 응급실</p>
+                    </div>
+                    <div class="buttom-title">
+                        <p>응급실</p>
+                    </div>
+                </a>
+                <a class="menu-item" href="">
+                    <div class="image">
+                        <img src="../static/img/hospital.png" style="width: 3vw; height: 6vh;" alt="">
+                    </div>
+                    <div class="top-title">
+                        <p>내 주변 병원</p>
+                    </div>
+                    <div class="buttom-title">
+                        <p>병원</p>
+                    </div>
+                </a>
+                <a class="menu-item" href="">
+                    <div class="image">
+                        <img src="../static/img/pharmacy.png" style="width: 3vw; height: 6vh;" alt="">
+                    </div>
+                    <div class="top-title">
+                        <p>내 주변 약국</p>
+                    </div>
+                    <div class="buttom-title">
+                        <p>약국</p>
+                    </div>
+                </a>
+                <a class="menu-item" href="">
+                    <div class="image">
+                        <img src="../static/img/total_hospital.png" style="width: 3.3vw; height: 6.5vh;" alt="">
+                    </div>
+                    <div class="top-title">
+                        <p>전체 병원정보</p>
+                    </div>
+                    <div class="buttom-title">
+                        <p>병원정보</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    <!-- 의료지식인 / 관련 서비스 소개 컨테이너 -->
+        <div class="ect-container">
+            <!-- 의료지식IN -->
+            <div class="grid-container">
+                <p class="title">의료지식IN</p>
+                <div class="medical-grid">
+                    {% for medical in medicals %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-title">{{medical.title}}</p>
+                            <p class="card-text">{{medical.content}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- 관련 서비스 소개 -->
+            <div class="service-container">
+                <p class="title">관련 서비스 소개</p>
+                <p>
+                    <strong>응급 상황</strong>을 대비하기 위한 정보를 찾고 싶을 때! 응급 상황에 필요한 정보들이 필요할 때! 를 위한 웹페이지입니다.</br>
+                    응급상황에서 클릭만 하면 <strong>주변 응급실, 병원, 약국의 위치</strong>를 위치 기반 서비스로 파악 가능합니다. <strong>전문의들</strong>만이 솔루션 및 정보를 제공할 수 있는 <strong>'의료지식in' 서비스</strong>를 구현하여 보다 전문적이고, 명확하게 응급 상황에 대처할 수 있도록 하였습니다.</br></br>
+                    또한 응급상황 정보 제공 <strong>챗봇 '응급이'</strong>를 통해 긴급 전화번호 뿐 아니라, 진료 과목에 대한 고민을 해소할 수 있도록 챗봇 기능을 구현하여 응급상황에 큰 도움이 되고자 제작한 웹서비스입니다.
+                </p>
+            </div>
+        </div>
+        
+        
+    {% endblock %}

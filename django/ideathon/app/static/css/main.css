@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding : 0;
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    src: url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap'); */
+
+body {
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
+    overflow-x: hidden;
+}
+
+.menu-container {
+    width: 100vw;
+    height: 67vh;
+    background-color: #C6C6C6;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-wrapper {
+    width: 83.3vw;
+    height: 75%;
+    background-color: #C6C6C6;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.menu-wrapper > .menu-item {
+    box-shadow: 2px 6px 7px rgb(0 0 0 / 10%);
+    background-color: #ffffff;
+    color: #000000;
+
+    text-align: center;
+    margin: 2.1vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+}
+
+.menu-wrapper > .menu-item > .image {
+    width: 5.5vw;
+    height: 5vw;
+
+    position: absolute;
+    left: 50%;
+    top: -13%;
+    margin-left: -2.75vw;
+
+    background-color: #F7F7F7;
+    border: 1px solid #797979;
+    border-radius: 100%;
+    opacity: 1;
+}
+
+.menu-wrapper > .menu-item > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-wrapper > .menu-item > .top-title {
+    height: 50%;
+    line-height: 66%;
+}
+
+.menu-wrapper > .menu-item > .top-title > p {
+    font-size: 1.5vw;
+}
+
+.menu-wrapper > .menu-item > .buttom-title {
+    height: 34%;
+    background-color:#F0F1F7;
+}
+
+.menu-wrapper > .menu-item > .buttom-title > p {
+    font-size: 2.5vw;
+}
+
+
+/* "의료지식인" / "관련서비스소개" 항목을 담는 컨테이너 */
+.ect-container {
+    padding: 63px 0;
+}
+
+.ect-container > div {
+    margin: auto;
+    width: 79.2vw;
+}
+
+/* "의료지식인" 항목을 담는 컨테이너 */
+.ect-container > .grid-container {
+    height: 70vh;
+}
+
+
+/* 의료 지식인 title */
+.title {
+    font-size: 40px;
+    font-weight: bolder;
+    letter-spacing: 0.72px;
+    color: #202020;
+}
+
+/* 의료 지식인 grid */
+.ect-container > .grid-container > .medical-grid {
+    height: 60vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+
+/* 관련 서비스 소개 */
+.ect-container > .service-container {
+    height: 50vh;
+}
