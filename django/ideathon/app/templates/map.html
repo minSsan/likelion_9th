@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search result</title>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ac3e45beda16d0d13cf0185a65ab9c76&libraries=services"></script>
+    <link rel="stylesheet" href="/static/css/map.css">
+    <link rel="stylesheet" href="/static/css/overlay.css">
+    <link rel="stylesheet" href="/static/css/placeList.css">
+    <!--  변수 선언부 -->
+    <script>
+        var keyword = '{{ keyword }}';
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div id="logo">
+            LOGO
+        </div>
+        <div id="header_item">
+            <div class="search_box">
+                <input type="text" id="searchKeyword" value="{{keyword}}" onkeypress="if( event.keyCode == 13){startSearch(this.value)}">
+                <a href="#">
+                    <button class="search_button">검색</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+        <!--검색결과 리스트-->
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <div>
+                    <div class="searchedKeyword">
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/js/map.js"></script>
+</body>
+</html>
