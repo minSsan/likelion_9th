@@ -12,6 +12,17 @@
             margin: 0;
             padding: 0;
         }
+
+        a {
+            text-decoration: none;
+        }
+
+        @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
+        body {
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+            overflow-x: hidden;
+        }
         
         .search-container {
             margin: auto;
@@ -27,13 +38,13 @@
             margin: 0px;
         }
 
-        a {
-            text-decoration: none;
+        .auth {
+            
             color: #ffffff;
             margin: 0 10px;
         }
 
-        a:hover {
+        .auth:hover {
             color: #000000;
         }
 
@@ -52,25 +63,25 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">메인</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'main' %}">메인</a>
                     <a class="nav-link" href="#">응급실</a>
                     <a class="nav-link" href="#">병원</a>
                     <a class="nav-link" href="#">약국</a>
-                    <a class="nav-link" href="#">병원정보</a>
+                    <a class="nav-link" href="{% url 'info_list' %}">병원정보</a>
                 </div>
             </div>
 
             <ul class="user-container">
                 {% if user.is_authenticated %}
                 <li>
-                    <a class="btn btn-outline-light" href="">로그아웃</a>
+                    <a class="btn btn-outline-light auth" href="">로그아웃</a>
                 </li>
                 {% else %}
                 <li>
-                    <a class="btn btn-outline-light" href="">회원가입</a>
+                    <a class="btn btn-outline-light auth" href="">회원가입</a>
                 </li>
                 <li>
-                    <a class="btn btn-outline-light" href="">로그인</a>
+                    <a class="btn btn-outline-light auth" href="">로그인</a>
                 </li>
                 {% endif %}
             </ul>

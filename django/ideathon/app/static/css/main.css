@@ -2,15 +2,16 @@
     margin: 0;
     padding : 0;
 }
-
+/*
 @font-face {
     font-family: 'Spoqa Han Sans Neo';
     src: url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
     font-weight: normal;
     font-style: normal;
 }
+*/
 
-/* @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap'); */
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
 body {
     font-family: 'Spoqa Han Sans Neo', sans-serif;
@@ -74,12 +75,19 @@ body {
 }
 
 .menu-wrapper > .menu-item > .top-title {
-    height: 50%;
-    line-height: 66%;
+    height: 60%;
+    margin: 10px 0px;
 }
 
-.menu-wrapper > .menu-item > .top-title > p {
+.menu-wrapper > .menu-item > .top-title > p:first-child {
     font-size: 1.5vw;
+    font-weight: bolder;
+    color: #545871;
+    margin: 0;
+}
+
+.menu-wrapper > .menu-item > .top-title > p:nth-child(2) {
+    color: #545871;
 }
 
 .menu-wrapper > .menu-item > .buttom-title {
@@ -87,8 +95,10 @@ body {
     background-color:#F0F1F7;
 }
 
-.menu-wrapper > .menu-item > .buttom-title > p {
-    font-size: 2.5vw;
+.menu-wrapper > .menu-item > .buttom-title > span {
+    font-size: 2vw;
+    font-weight: bold;
+    color: #545871;
 }
 
 
