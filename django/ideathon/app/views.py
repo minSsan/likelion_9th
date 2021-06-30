@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 # used in 'return_details'
 from selenium import webdriver
@@ -29,12 +30,20 @@ def map(request, keyword):
 def search(request):
     return render(request, "search.html")
 
+def info_list(request):
+    infos = Detail.objects.all()
+    paginator = Paginator(infos, 5)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    context = {
+        'infos':infos,
+        'posts':posts,
+    }
+    return render(request, "info_list.html", context)
 
 # 상세 페이지 호출
 def detail(request, keyword, place_name, address):
     return render(request, "detail.html")
-
-
 
 
 '''

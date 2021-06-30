@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.list-container {
+    width: 72.4vw;
+    margin: 30px auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sort-navbar {
+    width: 100vw;
+    border-bottom: 1px solid #707070;
+
+    display: flex;
+}
+
+.sort-navbar > .button {
+    font-size: 15px;
+    margin: 10px 10px;
+}
+
+.list-container > .card {
+    width: 100%;
+    margin: 15px 0;
+    color: #000000;
+}
