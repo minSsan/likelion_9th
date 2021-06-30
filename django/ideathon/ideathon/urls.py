@@ -26,4 +26,5 @@ urlpatterns = [
     path('search/map/<str:keyword>/', map, name='map'),
     path('search/map/<str:keyword>/<str:address>/<str:place_name>/', detail, name='detail'),
     path('search/', search, name="search"),
+    path('info_list/', info_list, name="info_list"),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+<head>
+    {% load static %}
+    {% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/info_list.css' %}">
+    {% endblock %}
+</head>
+
+{% block content %}
+    <div class="sort-navbar">
+        <div class="dropdown button">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                진료과목
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#" value="">전체</a></li>
+                <li><a class="dropdown-item" href="#" value="내과">내과</a></li>
+                <li><a class="dropdown-item" href="#" value="외과">외과</a></li>
+                <li><a class="dropdown-item" href="#" value="">그 외</a></li>
+            </ul>
+        </div>
+        <div class="button">
+            <button type="button" class="btn btn-secondary">어린이 전용</button>
+        </div>
+    </div>
+
+    <div class="list-container">
+        {% for p in posts %}
+        <a href="" class="card">
+            <div class="card-header">
+                {{p.title}}
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>{{p.address}}</p>
+                    <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                </blockquote>
+            </div>
+        </a>
+        {% endfor %}
+
+        <div class="page-num-container">
+            {% if posts.has_previous %}
+            <a href="?page={{posts.previous_page_number}}" class="btn btn-outline-secondary">Previous</a>
+            {% endif %}
+
+            <a href="?page={{posts.number}}" class="btn btn-outline-secondary">{{posts.number}}</a>
+            
+            {% if posts.has_next %}
+            <a href="?page={{posts.next_page_number}}" class="btn btn-outline-secondary">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    <script src="">
+
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            return new bootstrap.Dropdown(dropdownToggleEl)
+        })
+
+    </script>
+{% endblock %}

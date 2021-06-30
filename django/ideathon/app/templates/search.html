@@ -1,44 +1,27 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Page</title>
-    <link rel="stylesheet" href="/static/css/search_page.css">
-    <link rel="stylesheet" href="/static/css/search_box.css">
-</head>
-<body>
-    <div class="topContainer">
+{% extends 'base.html' %}
+    <head>
+        {% load static %}
+        {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'css/search.css' %}">
+        {% endblock %}
+    </head>
 
-        <div class="top area">
-            <div id="logo">
-                LOGO
+{% block content %}
+    <div class="search-container">
+        <form class="search-wrapper" action="" method="get">
+            <input class="search-bar" type="text" id="searchKeyword" autofocus onkeypress="if( event.keyCode == 13){startSearch(this.value)}">
+            <img src="../static/img/search_icon.png" alt="" style="position: right; width: 25px; height: 25px">
+            <div class="search-grid">
+                <button type="button" value="병원">#전체</button>
+                <button type="button" value="내과">#내과</button>
+                <button type="button" value="정형외과">#정형외과</button>
+                <button type="button" value="감기">#감기</button>
+                <button type="button" value="치과">#치과</button>
+                <button type="button" value="산부인과">#산부인과</button>
+                <button type="button" value="비뇨기과">#비뇨기과</button>
+                <button type="button" value="이비인후과">#이비인후과</button>
             </div>
-        </div>
-
-        <div class="search area">
-            <div class="search_box">
-                <input type="text" id="searchKeyword" autofocus onkeypress="if( event.keyCode == 13){startSearch(this.value)}">
-                <a href="#">
-                    <button class="search_button">검색</button>
-                </a>
-            </div>
-        </div>
-
-        <div class="keyword area">
-
-
-        </div>
-
-        <div class="bottom area">
-
-
-        </div>
-
+        </form>   
     </div>
-
     <script type="text/javascript" src="/static/js/search.js"></script>
-</body>
-</html>
+{% endblock %}
