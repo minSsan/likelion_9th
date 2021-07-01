@@ -9,3 +9,9 @@ function startSearch(value) {
     const keyword = this.value;
     startSearch(keyword);
     },false); });
+
+const searchKeyword = document.getElementById('searchKeyword')
+
+document.querySelector('.search-button').addEventListener('click', function() {
+    startSearch(searchKeyword.value)
+})
