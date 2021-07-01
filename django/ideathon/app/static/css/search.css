@@ -24,12 +24,20 @@
     border-radius: 38px;
 }
 
-.search-container > .search-wrapper > img {
+.search-container > .search-wrapper > button {
+    border: 0;
+    outline: 0;
+    background-color: transparent; /* 배경색 없음 */
+
     position: relative;
     top: 7px;
     left: 120px;
     width: 25px;
     height: 25px;
+
+    background-image: url(../img/search_icon.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .search-container > .search-wrapper > .search-grid {
