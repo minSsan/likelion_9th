@@ -1,10 +1,11 @@
-var searchButton = document.querySelector('.search_button')
+const searchGrid = document.querySelector('.search-grid')
+const searchButton = searchGrid.querySelectorAll('.search-button')
 
 function startSearch(value) {
     location.href = `map/${value}`;
 };
 
-searchButton.addEventListener('click', function() {
-    var keyword = document.getElementById("searchKeyword").value;
+[].forEach.call(searchButton,function(searchButton){ searchButton.addEventListener("click", function() {
+    const keyword = this.value;
     startSearch(keyword);
-});
+    },false); });

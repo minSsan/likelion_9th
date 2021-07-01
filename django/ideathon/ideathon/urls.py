@@ -24,7 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', main, name="main"),
     path('search/map/<str:keyword>/', map, name='map'),
-    path('search/map/<str:keyword>/<str:address>/<str:place_name>/', detail, name='detail'),
+    path('search/map/<str:keyword>/<str:addr>/<str:place_name>/', getData, name='getData'),
     path('search/', search, name="search"),
     path('info_list/', info_list, name="info_list"),
+    path('makedb/', makedb, name="makedb"),
+    path('info_list/<int:id>/', info_list_detail, name="info_list_detail")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

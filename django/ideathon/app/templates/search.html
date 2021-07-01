@@ -8,20 +8,20 @@
 
 {% block content %}
     <div class="search-container">
-        <form class="search-wrapper" action="" method="get">
+        <div class="search-wrapper">
             <input class="search-bar" type="text" id="searchKeyword" autofocus onkeypress="if( event.keyCode == 13){startSearch(this.value)}">
             <img src="../static/img/search_icon.png" alt="" style="width: 25px; height: 25px">
             <div class="search-grid">
-                <button type="button" value="병원">#전체</button>
-                <button type="button" value="내과">#내과</button>
-                <button type="button" value="정형외과">#정형외과</button>
-                <button type="button" value="감기">#감기</button>
-                <button type="button" value="치과">#치과</button>
-                <button type="button" value="산부인과">#산부인과</button>
-                <button type="button" value="비뇨기과">#비뇨기과</button>
-                <button type="button" value="이비인후과">#이비인후과</button>
+                <button type="button" class="search-button" value="병원">#전체</button>
+                <button type="button" class="search-button" value="내과">#내과</button>
+                <button type="button" class="search-button" value="정형외과">#정형외과</button>
+                <button type="button" class="search-button" value="감기">#감기</button>
+                <button type="button" class="search-button" value="치과">#치과</button>
+                <button type="button" class="search-button" value="산부인과">#산부인과</button>
+                <button type="button" class="search-button" value="비뇨기과">#비뇨기과</button>
+                <button type="button" class="search-button" value="이비인후과">#이비인후과</button>
             </div>
-        </form>   
+        </div>   
     </div>
-    <script type="text/javascript" src="/static/js/search.js"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
 {% endblock %}

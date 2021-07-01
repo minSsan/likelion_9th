@@ -1,21 +1,23 @@
-var markers = [];
+let markers = [];
 var markerIndex;
 // 지번 주소 기준으로 중복 데이터 제거
-var preMarkerAddr = [];
-
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+let preMarkerAddr = [];
+let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(37.29692790158919, 126.83433417582125), // 지도의 중심좌표
         level: 4 // 지도의 확대 레벨 
     }; 
 // 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+let map = new kakao.maps.Map(mapContainer, mapOption); 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 // 접속 위치 변수
 var locPosition;
+// view에서 받아온 json파일
+var detailData;
+const detail = document.getElementById('placesList-detail');
 
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
@@ -43,6 +45,7 @@ if (navigator.geolocation) {
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces(value) {
+    detail.style.display = "none";
     keyword = value;
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
@@ -84,7 +87,7 @@ function placesSearchCB(data, status, pagination) {
 function displayPlaces(places) {
 
     var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
+    menuEl = document.getElementById('placesList'),
     fragment = document.createDocumentFragment(), 
     bounds = new kakao.maps.LatLngBounds(), 
     listStr = '';
@@ -104,13 +107,11 @@ function displayPlaces(places) {
                         // 마커를 생성하고 지도에 표시합니다
                         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
                             marker = addMarker(placePosition, markerIndex), 
-
                             itemEl = getListItem(markerIndex, places[i]); // 검색 결과 항목 Element를 생성합니다
-
                         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                         // LatLngBounds 객체에 좌표를 추가합니다
                         // bounds.extend(placePosition);
-
+                        preMarkerAddr.push(places[i].address_name);
                         // 마커와 검색결과 항목에 mouseover 했을때
                         // 해당 장소에 인포윈도우에 장소명을 표시합니다
                         // mouseout 했을 때는 인포윈도우를 닫습니다
@@ -123,16 +124,6 @@ function displayPlaces(places) {
                             kakao.maps.event.addListener(marker, 'mouseout', function() {
                                 infowindow.close();
                             });
-
-                            itemEl.onmouseover =  function () {
-                                displayInfowindow(marker, title);
-                                map.panTo(markerPosition);
-                            };
-
-                            itemEl.onmouseout =  function () {
-                                infowindow.close();
-                                map.panTo(locPosition);
-                            };
                         })(marker, places[i].place_name);
 
                         fragment.appendChild(itemEl);
@@ -152,8 +143,8 @@ function displayPlaces(places) {
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-    
-    var link = document.createElement('a');
+    var markerPosition = new kakao.maps.LatLng(places.y, places.x);
+    var box = document.createElement('div');
     var el = document.createElement('li'),
 
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
@@ -163,29 +154,37 @@ function getListItem(index, places) {
     if (places.road_address_name) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var road_address_name = `${places.road_address_name}`.replace(/ /g, "+");
-        link.setAttribute('href', `${road_address_name}/${place_name}`)
-        preMarkerAddr.push(places.address_name)
-
+        box.onclick = function() { 
+            detail.style.display = "none";
+            map.panTo(markerPosition);
+            getData(road_address_name,place_name);
+        }
         itemStr += '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';
+        
     } else {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var address_name = `${places.address_name}`.replace(/ /g, "+");
-        link.setAttribute('href', `${address_name}/${place_name}`)
-        preMarkerAddr.push(places.address_name)
+        box.onclick = function() { 
+            detail.style.display = "none";
+            map.panTo(markerPosition);
+            getData(address_name,place_name);
+        }
 
         itemStr += '    <span>' +  places.address_name  + '</span>'; 
     }
-                 
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+
+    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
                 '</div>';           
 
     el.innerHTML = itemStr;
     el.className = 'item';
+    box.className = 'box';
 
-    link.appendChild(el);
+    box.appendChild(el);
     markerIndex++;
-    return link;
+
+    return box;
 }
 
 
@@ -286,3 +285,41 @@ searchButton.addEventListener('click', function() {
     var keyword = document.getElementById("searchKeyword").value;
     startSearch(keyword);
 });
+
+// httpRequest로 크롤링된 데이터 json형식으로 수신
+function getData(addr, name) {
+    var httpRequest = new XMLHttpRequest();
+    var url = './' + addr + '/' + name + '/';
+    httpRequest.open('GET', url);
+    httpRequest.onreadystatechange = function() {
+        if(this.status == 200 && this.readyState == this.DONE){
+            // 요청한 데이터를 반환
+            console.log(httpRequest.response)
+            detailData = JSON.parse(httpRequest.response);
+            showListDetail(detailData);
+        } else if (this.status != 200){ 
+            alert('오류가 발생하였습니다. ' +  this.statusText );
+        }
+    };
+    httpRequest.send()
+}
+
+// map.html detail창 구현
+function showListDetail(data) {
+    if (!data) {
+        console.log('조회 정보가 없습니다.')
+    } else if (data.keyword) {
+        // 동기처리 - detail창 요소 구성 전까지 노출되지 않음.
+        new Promise((resolve, reject) => {
+            console.log(data)
+        })
+        .then(() => {
+            detail.style.display = "block";
+        })
+        .catch(() => {
+            console.log('showDetail Error');
+        })
+    } else {
+        console.log(data)
+    }
+}

@@ -1,0 +1,24 @@
+.detail-container {
+    width: 72.4vw;
+    height: 84vh;
+    margin: 30px auto;
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.detail-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.detail-container > .detail-body {
+    width: 100%;
+    margin: 15px 0;
+    color: #000000;
+    text-align: center;
+}
+
