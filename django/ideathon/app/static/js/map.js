@@ -20,6 +20,7 @@ var detailData;
 const detail = document.getElementById('placesList-detail-hos');
 const nullList = document.getElementById('placesList-Null');
 const returnToList = document.getElementById('totalList');
+const pageNum = document.getElementById('pagination');
 
 document.querySelector('.active').setAttribute('class', 'nav-link')
 if (keyword == '약국') {
@@ -167,7 +168,7 @@ function getListItem(index, places) {
 
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5>' + places.place_name + '</h5>';
+                '   <h5 class="info-name">' + places.place_name + '</h5>';
 
     if (places.road_address_name) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
@@ -192,7 +193,7 @@ function getListItem(index, places) {
         itemStr += '    <span>' +  places.address_name  + '</span>'; 
     }
 
-    itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+    itemStr += '  <span>' + places.phone  + '</span>' +
                 '</div>';           
 
     el.innerHTML = itemStr;
@@ -299,6 +300,7 @@ var searchButton = document.querySelector('.search_button')
 function startSearch(value) {
     detail.style.display = 'none'
     document.getElementById("placesList").style.display = "block";
+    document.getElementById("pageNum").style.display = "block";
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
     nullList.style.display = 'none'
@@ -352,6 +354,7 @@ function showListDetail(data, name, addr) {
                 detail.style.display = "block";
             }
             document.getElementById("placesList").style.display = "none";
+            document.getElementById("pageNum").style.display = "none";
         })
         .catch((error) => {
             console.log(error)
@@ -422,6 +425,8 @@ returnToList.addEventListener('click', function() {
     this.style.display = 'none'
     detail.style.display = 'none'
     document.getElementById("placesList").style.display = "block";
+    document.getElementById("pageNum").style.display = "block";
+    
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
     nullList.style.display = 'none'
