@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+    {% block content %}
     <h1>글을 수정해보자!</h1>
     <form action="{% url 'update' id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -16,5 +9,4 @@
         <p>사진: <input type="file" name="image" value="{{image}}"></p>
         <button type="submit">수정</button>
     </form>
-</body>
-</html>
+    {% endblock %}
