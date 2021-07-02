@@ -21,7 +21,6 @@ const detail = document.getElementById('placesList-detail-hos');
 const nullList = document.getElementById('placesList-Null');
 const returnToList = document.getElementById('totalList');
 
-document.querySelector('.active').setAttribute('class', 'nav-link')
 if (keyword == '약국') {
     document.getElementById('ph').setAttribute('class', 'nav-link active')
 } else if (keyword == '응급실') {

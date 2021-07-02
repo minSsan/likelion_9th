@@ -1,4 +1,3 @@
-document.querySelector('.active').setAttribute('class', 'nav-link')
 document.getElementById('if').setAttribute('class', 'nav-link active')
 
 document.querySelector(".kw").addEventListener('change', function() {

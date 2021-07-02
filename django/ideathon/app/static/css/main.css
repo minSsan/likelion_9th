@@ -126,6 +126,11 @@ body {
     color: #202020;
 }
 
+.title > .ect-more {
+    margin: 0 10px;
+    font-size: 12px;
+}
+
 /* 의료 지식인 grid */
 .ect-container > .grid-container > .medical-grid {
     height: 60vh;
@@ -135,6 +140,16 @@ body {
     grid-gap: 10px;
 }
 
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
 
 /* 관련 서비스 소개 */
 .ect-container > .service-container {
