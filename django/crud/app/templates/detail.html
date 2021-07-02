@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>detail page</title>
-    <style>
-        body {
-            text-align: center;
-        }
-        a {
-            text-decoration: none;
-        }
-        .post {
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
+    {% block content %}
     <header>
         <p style="font-size: 70px; font-weight: bold;">Blog</p>
     </header>
@@ -52,5 +34,4 @@
             <button type="submit">작성</button>
         </form>
     </main>
-</body>
-</html>
+    {% endblock %}
