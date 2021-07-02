@@ -20,7 +20,6 @@ var detailData;
 const detail = document.getElementById('placesList-detail-hos');
 const nullList = document.getElementById('placesList-Null');
 const returnToList = document.getElementById('totalList');
-const pageNum = document.getElementById('pagination');
 
 document.querySelector('.active').setAttribute('class', 'nav-link')
 if (keyword == '약국') {
@@ -300,7 +299,7 @@ var searchButton = document.querySelector('.search_button')
 function startSearch(value) {
     detail.style.display = 'none'
     document.getElementById("placesList").style.display = "block";
-    document.getElementById("pageNum").style.display = "block";
+    document.getElementById("pagination").style.display = "block";
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
     nullList.style.display = 'none'
@@ -354,7 +353,7 @@ function showListDetail(data, name, addr) {
                 detail.style.display = "block";
             }
             document.getElementById("placesList").style.display = "none";
-            document.getElementById("pageNum").style.display = "none";
+            document.getElementById("pagination").style.display = "none";
         })
         .catch((error) => {
             console.log(error)
@@ -425,7 +424,7 @@ returnToList.addEventListener('click', function() {
     this.style.display = 'none'
     detail.style.display = 'none'
     document.getElementById("placesList").style.display = "block";
-    document.getElementById("pageNum").style.display = "block";
+    document.getElementById("pagination").style.display = "block";
     
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
