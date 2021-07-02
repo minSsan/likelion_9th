@@ -63,11 +63,11 @@
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="{% url 'main' %}">메인</a>
-                    <a class="nav-link" href="/search/map/응급실">응급실</a>
-                    <a class="nav-link" href="{% url 'search' %}">병원</a>
-                    <a class="nav-link" href="/search/map/약국">약국</a>
-                    <a class="nav-link" href="{% url 'info_list' %}">병원정보</a>
+                    <a class="nav-link active" id="ma" aria-current="page" href="{% url 'main' %}">메인</a>
+                    <a class="nav-link" id="em" href="/search/map/응급실">응급실</a>
+                    <a class="nav-link" id="ho" href="{% url 'search' %}">병원</a>
+                    <a class="nav-link" id="ph" href="/search/map/약국">약국</a>
+                    <a class="nav-link" id="if" href="{% url 'info_list' %}">병원정보</a>
                 </div>
             </div>
 
@@ -96,5 +96,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 </html>

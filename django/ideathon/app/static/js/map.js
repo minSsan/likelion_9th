@@ -1,5 +1,5 @@
 let markers = [];
-var markerIndex;
+let markerIndex;
 // 지번 주소 기준으로 중복 데이터 제거
 let preMarkerAddr = [];
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -18,7 +18,17 @@ var locPosition;
 // view에서 받아온 json파일
 var detailData;
 const detail = document.getElementById('placesList-detail');
+const nullList = document.getElementById('placesList-Null');
+const returnToList = document.getElementById('totalList');
 
+document.querySelector('.active').setAttribute('class', 'nav-link')
+if (keyword == '약국') {
+    document.getElementById('ph').setAttribute('class', 'nav-link active')
+} else if (keyword == '응급실') {
+    document.getElementById('em').setAttribute('class', 'nav-link active')
+} else if (keyword) {
+    document.getElementById('ho').setAttribute('class', 'nav-link active')
+}
 
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 if (navigator.geolocation) {
@@ -42,10 +52,18 @@ if (navigator.geolocation) {
     searchPlaces(keyword)
 }
 
+document.getElementById('reSearch').addEventListener('click', function(){
+    searchPlaces(keyword)
+})
+
+document.getElementById('nowPlace').addEventListener('click', function(){
+    map.panTo(locPosition);
+})
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces(value) {
     detail.style.display = "none";
+    nullList.style.display = 'none';
     keyword = value;
 
     // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
@@ -155,7 +173,6 @@ function getListItem(index, places) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var road_address_name = `${places.road_address_name}`.replace(/ /g, "+");
         box.onclick = function() { 
-            detail.style.display = "none";
             map.panTo(markerPosition);
             getData(road_address_name,place_name);
         }
@@ -166,7 +183,6 @@ function getListItem(index, places) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var address_name = `${places.address_name}`.replace(/ /g, "+");
         box.onclick = function() { 
-            detail.style.display = "none";
             map.panTo(markerPosition);
             getData(address_name,place_name);
         }
@@ -277,6 +293,7 @@ function displayMarker(locPosition) {
 // map 페이지에서 키워드 검색 함수
 var searchButton = document.querySelector('.search_button')
 
+/*
 function startSearch(value) {
     searchPlaces(value);
 };
@@ -285,6 +302,7 @@ searchButton.addEventListener('click', function() {
     var keyword = document.getElementById("searchKeyword").value;
     startSearch(keyword);
 });
+*/
 
 // httpRequest로 크롤링된 데이터 json형식으로 수신
 function getData(addr, name) {
@@ -294,9 +312,8 @@ function getData(addr, name) {
     httpRequest.onreadystatechange = function() {
         if(this.status == 200 && this.readyState == this.DONE){
             // 요청한 데이터를 반환
-            console.log(httpRequest.response)
             detailData = JSON.parse(httpRequest.response);
-            showListDetail(detailData);
+            showListDetail(detailData, name, addr);
         } else if (this.status != 200){ 
             alert('오류가 발생하였습니다. ' +  this.statusText );
         }
@@ -305,21 +322,64 @@ function getData(addr, name) {
 }
 
 // map.html detail창 구현
-function showListDetail(data) {
+function showListDetail(data, name, addr) {
+    var name = name.replace(/\+/g, ' ')
+    var addr = addr.replace(/\+/g, ' ')
     if (!data) {
-        console.log('조회 정보가 없습니다.')
+        nullList.style.display = 'block';
+        returnToList.style.display = "block";
     } else if (data.keyword) {
         // 동기처리 - detail창 요소 구성 전까지 노출되지 않음.
         new Promise((resolve, reject) => {
             console.log(data)
+            createDetailBox(data, name, addr)
+            resolve()
         })
         .then(() => {
+            returnToList.style.display = "block";
             detail.style.display = "block";
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error)
             console.log('showDetail Error');
         })
     } else {
-        console.log(data)
+        
     }
 }
+
+function createDetailBox(data, name, addr) {
+    if (data.keyword == '응급실') {
+        var dgid = data.dgid.replace(/\,/g, ' ')
+        document.querySelector('.title').innerText = name
+        document.querySelector('.addr').innerText = addr
+        document.querySelector('.dutytel3').innerText = data.dutyTel3
+        document.querySelector('.hvdnm').innerText = data.hvdnm
+        document.querySelector('.hv1').innerText = data.hv1
+        document.querySelector('.hvec').innerText = data.hvec
+        document.querySelector('.hvgc').innerText = data.hvgc
+        document.querySelector('.hvoc').innerText = data.hvoc
+        document.querySelector('.hvicc').innerText = data.hvicc
+        document.querySelector('.hvccc').innerText = data.hvccc
+        document.querySelector('.hvccc').innerText = data.hvccc
+        document.querySelector('.hv7').innerText = data.hv7
+        document.querySelector('.hv8').innerText = data.hv9
+        document.querySelector('.hv2').innerText = data.hv2
+        document.querySelector('.hv3').innerText = data.hv3
+        document.querySelector('.hv4').innerText = data.hv4
+        document.querySelector('.hvncc').innerText = data.hvncc
+        document.querySelector('.hvamyn').innerText = data.hvamyn
+        document.querySelector('.hvctayn').innerText = data.hvctayn
+        document.querySelector('.hvmriayn').innerText = data.hvmriayn
+        document.querySelector('.dgid').innerText = dgid
+    } else {
+
+    }
+
+}
+
+returnToList.addEventListener('click', function() {
+    this.style.display = 'none'
+    detail.style.display = 'none'
+    nullList.style.display = 'none'
+})

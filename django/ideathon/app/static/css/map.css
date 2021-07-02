@@ -1,6 +1,6 @@
 .map-container {
     width: 100vw;
-    height: 84vh;
+    height: 79vh;
     background-color: #C6C6C6;
     display: flex;
 }
@@ -9,7 +9,12 @@
     position:relative;
     float: right;
     width: 20vw;
-    height: 100%
+    height: 100%;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+#list-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 
 #map {
@@ -22,4 +27,22 @@
 
 #placeList #pagination {
     width: 100%
+}
+
+
+.sort-navbar {
+    width: 100vw;
+    border-bottom: 1px solid #707070;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.sort-navbar > .button {
+    font-size: 15px;
+    margin: 10px 10px;
+    display: flex;
+}
+
+.sort-navbar > .button > button {
+    margin-left: 2px;
 }

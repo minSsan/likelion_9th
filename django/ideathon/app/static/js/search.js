@@ -1,6 +1,9 @@
 const searchGrid = document.querySelector('.search-grid')
 const searchButton = searchGrid.querySelectorAll('.search-button')
 
+document.querySelector('.active').setAttribute('class', 'nav-link')
+document.getElementById('ho').setAttribute('class', 'nav-link active')
+
 function startSearch(value) {
     location.href = `map/${value}`;
 };

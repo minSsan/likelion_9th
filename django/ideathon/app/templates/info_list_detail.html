@@ -9,15 +9,17 @@
 {% block content %}
     <div class='detail-container'>
         <div class='detail-body'>
-            <div class='detail-Name'>
+            <div class='detail-name'>
                 {{ infos.Name }}
             </div>
             <div class='detail-base'>
                 <p>{{ infos.Addr }}</p>
                 <p>{{ infos.Tele }}</p>
+                <p>{{ infos.Etc }}</p>
+                <p>{{ infos.Info }}</p>
             </div>
-            <div class='detail-time'>
-                <p> 영업시간 </p>
+            <div class='detail-etc'>
+                <p> 세부정보 </p>
                 <table class="table">
                     <thead>
                         <tr>
@@ -33,19 +35,133 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>{{ infos.Mono | slice:":2" }}:{{ infos.Mono | slice:"2:" }} - {{ infos.Monc | slice:":2" }}:{{ infos.Monc | slice:"2:" }}</td>
+                            <td>{{ infos.Tueo | slice:":2" }}:{{ infos.Tueo | slice:"2:" }} - {{ infos.Tuec | slice:":2" }}:{{ infos.Tuec | slice:"2:" }}</td>
+                            <td>{{ infos.Wedo | slice:":2" }}:{{ infos.Wedo | slice:"2:" }} - {{ infos.Wedc | slice:":2" }}:{{ infos.Wedc | slice:"2:" }}</td>
+                            <td>{{ infos.Thuo | slice:":2" }}:{{ infos.Thuo | slice:"2:" }} - {{ infos.Thuc | slice:":2" }}:{{ infos.Thuc | slice:"2:" }}</td>
+                            <td>{{ infos.Frio | slice:":2" }}:{{ infos.Frio | slice:"2:" }} - {{ infos.Fric | slice:":2" }}:{{ infos.Fric | slice:"2:" }}</td>
+                            {% if infos.Sats != "" %}
+                                <td>{{ infos.Sato | slice:":2" }}:{{ infos.Sato | slice:"2:" }} - {{ infos.Satc | slice:":2" }}:{{ infos.Satc | slice:"2:" }}</td>
+                            {% else %}
+                                <td> - </td>
+                            {% endif %}
+                            {% if infos.Suno != "" %}
+                                <td>{{ infos.Suno | slice:":2" }}:{{ infos.Suno | slice:"2:" }} - {{ infos.Sunc | slice:":2" }}:{{ infos.Sunc | slice:"2:" }}</td>
+                            {% else %}
+                                <td> - </td>
+                            {% endif %}
+                            {% if infos.Holo != "" %}
+                                <td>{{ infos.Holo | slice:":2" }}:{{ infos.Holo | slice:"2:" }} - {{ infos.Holc | slice:":2" }}:{{ infos.Holc | slice:"2:" }}</td>
+                            {% else %}
+                                <td> - </td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="6">응급실 운영</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">주간</th>
+                            <td>{{ infos.emDy }}</td>
+                            <th scope="row">야간</th>
+                            <td>{{ infos.emNg }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">진료 과목</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ infos.dgsb }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="6">전문의</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">의과</th>
+                            <td>{{ infos.medr }}</td>
+                            <th scope="row">치과</th>
+                            <td>{{ infos.dedr }}</td>
+                            <th scope="row">한방</th>
+                            <td>{{ infos.cmdr }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" colspan="6">병상</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">일반</th>
+                            <td>{{ infos.stSi }}</td>
+                            <th scope="row">일반 상급</th>
+                            <td>{{ infos.hgSi }}</td>
+                            <th scope="row">응급실</th>
+                            <td>{{ infos.emCn }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">신생아중환자</th>
+                            <td>{{ infos.nbSp }}</td>
+                            <th scope="row">소아중환자</th>
+                            <td>{{ infos.chCn }}</td>
+                            <th scope="row">성인중환자</th>
+                            <td>{{ infos.adSp }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">수술실</th>
+                            <td>{{ infos.soCn }}</td>
+                            <th scope="row">물리치료실</th>
+                            <td>{{ infos.ptCn }}</td>
+                            <th scope="row">분만실</th>
+                            <td>{{ infos.paCn }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">정신과</th>
+                            <td>{{ infos.psstCn }}</td>
+                            <th scope="row">정신과 상급</th>
+                            <td>{{ infos.pshgCn }}</td>
+                            <th scope="row">격리</th>
+                            <td>{{ infos.isCn }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">무균치료실</th>
+                            <td>{{ infos.anCn }}</td>
+                            <th scope="row"></th>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th scope="row"></th>
                             <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <button class="op btn btn-secondary" value="" onclick="window.history.back()">돌아가기</button>
     </div>
-    <script type="text/javascript" src=""></script>
+    <script>
+        document.querySelector('.active').setAttribute('class', 'nav-link')
+        document.getElementById('if').setAttribute('class', 'nav-link active')
+    </script>
 {% endblock %}

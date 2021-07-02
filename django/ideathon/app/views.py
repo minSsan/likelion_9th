@@ -37,7 +37,7 @@ def search(request):
 
 def info_list(request):
     infos = hospital.objects.all()
-
+    page = request.GET.get('page', '1')
     kw = request.GET.get('kw', '')
     op = request.GET.get('op', '')
 
@@ -45,18 +45,19 @@ def info_list(request):
         infos = infos.filter(
             Q(Name__icontains = '소아' or '어린이') |
             Q(Etc__icontains = '소아' or '어린이') |
-            Q(Info__icontains = '소아' or '어린이')
+            Q(Info__icontains = '소아' or '어린이') |
+            Q(dgsb__icontains = '소아' or '어린이') 
         ).distinct()
-
+    
     if kw:
         infos = infos.filter(
             Q(Name__icontains = kw) |
             Q(Etc__icontains = kw) |
-            Q(Info__icontains = kw)
+            Q(Info__icontains = kw) |
+            Q(dgsb__icontains = kw) 
         ).distinct()
 
     paginator = Paginator(infos, 10)
-    page = request.GET.get('page')
     posts = paginator.get_page(page)
     context = {
         'infos':infos,
@@ -111,7 +112,6 @@ def getData(request, keyword, addr, place_name):
         xmlJsonPre = json.dumps(xmlDictPre)
         xmlDict = json.loads(xmlJsonPre)
         dataList = xmlDict['response']['body']['items']['item']
-        print(type(dataList))
         if type(dataList) == dict:
             hpid = dataList['hpid']
         else :
@@ -162,6 +162,7 @@ def getData(request, keyword, addr, place_name):
             dgid = xmlDict['response']['body']['items']['item']['dgidIdName']
             
             data['dgid'] = dgid
+            data['keyword'] = keyword
         
         info = json.dumps(data, ensure_ascii=False)
         return HttpResponse(info)
@@ -392,7 +393,7 @@ def makedb(request): #데이터 생성함수 http://127.0.0.1:8000/makedb 로 �
                     dgsbjtCdNm += data5[j]['dgsbjtCdNm']
                     dgsbjtCdNm += ' '
             else :
-                dgsbjtCdNm = data5.get('dgsbjtCdNm ')
+                dgsbjtCdNm = data5.get('dgsbjtCdNm', "")
 
             queryParams = '?' + urlencode(
                 {
@@ -427,47 +428,49 @@ def makedb(request): #데이터 생성함수 http://127.0.0.1:8000/makedb 로 �
             new_data.Name = data.get('dutyName')
             new_data.Addr = data.get('dutyAddr')
             new_data.Tele = data.get('dutyTel1')
-            new_data.Mono = data.get('dutyTime1s')
-            new_data.Monc = data.get('dutyTime1c')
-            new_data.Tueo = data.get('dutyTime2s')
-            new_data.Tuec = data.get('dutyTime2c')
-            new_data.Wedo = data.get('dutyTime3s')
-            new_data.Wedc = data.get('dutyTime3c')
-            new_data.Thuo = data.get('dutyTime4s')
-            new_data.Thuc = data.get('dutyTime4c')
-            new_data.Frio = data.get('dutyTime5s')
-            new_data.Fric = data.get('dutyTime5c')
-            new_data.Sato = data.get('dutyTime6s')
-            new_data.Satc = data.get('dutyTime6c')
-            new_data.Suno = data.get('dutyTime7s')
-            new_data.Sunc = data.get('dutyTime7c')
-            new_data.Hpid = data.get('hpid')
-            new_data.Etc = data.get('dutyEtc')
-            new_data.Info = data.get('dutyInf')
-            new_data.Map = data.get('dutyMapimg')
+            new_data.Mono = data.get('dutyTime1s', '')
+            new_data.Monc = data.get('dutyTime1c', '')
+            new_data.Tueo = data.get('dutyTime2s', '')
+            new_data.Tuec = data.get('dutyTime2c', '')
+            new_data.Wedo = data.get('dutyTime3s', '')
+            new_data.Wedc = data.get('dutyTime3c', '')
+            new_data.Thuo = data.get('dutyTime4s', '')
+            new_data.Thuc = data.get('dutyTime4c', '')
+            new_data.Frio = data.get('dutyTime5s', '')
+            new_data.Fric = data.get('dutyTime5c', '')
+            new_data.Sato = data.get('dutyTime6s', '')
+            new_data.Satc = data.get('dutyTime6c', '')
+            new_data.Suno = data.get('dutyTime7s', '')
+            new_data.Sunc = data.get('dutyTime7c', '')
+            new_data.Holo = data.get('dutyTime8s', '')
+            new_data.Holc = data.get('dutyTime8c', '')
+            new_data.Hpid = data.get('hpid', '')
+            new_data.Etc = data.get('dutyEtc', '')
+            new_data.Info = data.get('dutyInf', '')
+            new_data.Map = data.get('dutyMapimg', '')
 
-            new_data.Todr = data2.get('drTotCnt')
-            new_data.medr = data2.get('mdeptSdrCnt')
-            new_data.dedr = data2.get('detySdrCnt')
-            new_data.cmdr = data2.get('cmdcSdrCnt')
+            new_data.Todr = data2.get('drTotCnt', '')
+            new_data.medr = data2.get('mdeptSdrCnt', '')
+            new_data.dedr = data2.get('detySdrCnt', '')
+            new_data.cmdr = data2.get('cmdcSdrCnt', '')
 
-            new_data.hgSi = data3.get('hghrSickbdCnt')
-            new_data.stSi = data3.get('stdSickbdCnt')
-            new_data.adSp = data3.get('aduChldSprmCnt')
-            new_data.nbSp = data3.get('nbySprmCnt')
-            new_data.paCn = data3.get('partumCnt')
-            new_data.soCn = data3.get('soprmCnt')
-            new_data.emCn = data3.get('emymCnt')
-            new_data.ptCn = data3.get('ptrmCnt')
-            new_data.chCn = data3.get('chldSprmCnt')
-            new_data.pshgCn = data3.get('psydeptClsHigSbdCnt')
-            new_data.psstCn = data3.get('psydeptClsGnlSbdCnt')
-            new_data.isCn = data3.get('isnrSbdCnt')
-            new_data.anCn = data3.get('anvirTrrmSbdCnt')
+            new_data.hgSi = data3.get('hghrSickbdCnt', '')
+            new_data.stSi = data3.get('stdSickbdCnt', '')
+            new_data.adSp = data3.get('aduChldSprmCnt', '')
+            new_data.nbSp = data3.get('nbySprmCnt', '')
+            new_data.paCn = data3.get('partumCnt', '')
+            new_data.soCn = data3.get('soprmCnt', '')
+            new_data.emCn = data3.get('emymCnt', '')
+            new_data.ptCn = data3.get('ptrmCnt', '')
+            new_data.chCn = data3.get('chldSprmCnt', '')
+            new_data.pshgCn = data3.get('psydeptClsHigSbdCnt', '')
+            new_data.psstCn = data3.get('psydeptClsGnlSbdCnt', '')
+            new_data.isCn = data3.get('isnrSbdCnt', '')
+            new_data.anCn = data3.get('anvirTrrmSbdCnt', '')
 
-            new_data.emDy = data4.get('emyDayYn')
-            new_data.emNg = data4.get('emyNgtYn')
-            new_data.paQt = data4.get('parkQty')
+            new_data.emDy = data4.get('emyDayYn', 'N')
+            new_data.emNg = data4.get('emyNgtYn', 'N')
+            new_data.paQt = data4.get('parkQty', '')
             new_data.dgsb = dgsbjtCdNm
             new_data.srch = srchCdNm
 
@@ -475,4 +478,4 @@ def makedb(request): #데이터 생성함수 http://127.0.0.1:8000/makedb 로 �
             new_data.save()
             print(i)
 
-    return render(request, 'result.html')
+    return render(request)

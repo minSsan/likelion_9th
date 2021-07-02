@@ -1,4 +1,4 @@
-{% extends "map_base.html" %}
+{% extends "base.html" %}
     <head>
         {% load static %}
         {% block extrahead %}
@@ -12,12 +12,127 @@
         {% endblock %}
     </head>
     {% block content %}
+    <div class="sort-navbar">
+        <div class="dropdown button">
+            <button id="reSearch" class="op btn btn-secondary" value="child" {% if op == 'child' %}disabled{% endif %}>범위 내 재검색</button>
+            <button id="nowPlace" class="op2 btn btn-secondary" value="" {% if op == '' and kw == '' %}disabled{% endif %}>현재 위치</button>
+            <button id="totalList" class="op2 btn btn-secondary" style="display: none" value="" {% if op == '' and kw == '' %}disabled{% endif %}>전체 목록</button>
+        </div>
+    </div>
+
     <div class="map-container">
         <div id="map">
         </div>
 
         <div id="list-container">
-            <div id="placesList-detail"></div>
+            <div id="placesList-detail" style="height:100%; display:none;">
+                <h4 class="title"></h4>
+                <div class="addr"></div>
+                <div class="Tele">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                            <th scope="row">응급실</th>
+                                <td class="dutytel3" colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">당직의</th>
+                                <td class="hvdnm"></td>
+                                <td class="hv1"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">진료과목</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class='dgid' style="word-break: keep-all;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class='info'>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="6">실시간 가용 병상</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">응급실</th>
+                                <td class="hvec"></td>
+                                <th scope="row">입원실</th>
+                                <td class="hvgc"></td>
+                                <th scope="row">수술실</th>
+                                <td class="hvoc"></td>
+                            </tr>
+                            <tr>
+                                <th scope="col"  colspan="6">중환자실</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">일반</th>
+                                <td class="hvicc"></td>
+                                <th scope="row">신경</th>
+                                <td class="hvncc"></td>
+                                <th scope="row">흉부</th>
+                                <td class="hvccc"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">약물</th>
+                                <td class="hv7"></td>
+                                <th scope="row">화상</th>
+                                <td class="hv8"></td>
+                                <th scope="row">외상</th>
+                                <td class="hv9"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">내과</th>
+                                <td class="hv2"></td>
+                                <th scope="row">외과</th>
+                                <td class="hv3"></td>
+                                <th scope="row">신경외과</th>
+                                <td class="hv4"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">신생</th>
+                                <td class="hvncc"></td>
+                                <th scope="row"></th>
+                                <td></td>
+                                <th scope="row"></th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" colspan="6">기타</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">구급차</th>
+                                <td class="hvamyn"></td>
+                                <th scope="row">CT</th>
+                                <td class="hvctayn"></td>
+                                <th scope="row">MRI</th>
+                                <td class="hvmriayn"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="placesList-Null" style="height:100%; display:none;">
+                <p>조회된 정보가 없습니다.</p>
+            </div>
             <hr>
             <ul id="placesList"></ul>
             <div id="pagination"></div>

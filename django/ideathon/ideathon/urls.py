@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from app.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name="admin"),
     path('', main, name="main"),
     path('search/map/<str:keyword>/', map, name='map'),
     path('search/map/<str:keyword>/<str:addr>/<str:place_name>/', getData, name='getData'),
