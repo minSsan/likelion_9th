@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils import timezone
 from .models import *
 
 # Create your views here.
@@ -80,3 +81,13 @@ def delete(request, id):
     delete_data = get_object_or_404(Store, pk=id)
     delete_data.delete()
     return redirect('home')
+
+def upload_review(request, id):
+    new_review = Review()
+    new_review.current_store = Store.objects.get(pk=id)
+    new_review.user = request.POST['user']
+    new_review.content = request.POST['content']
+    new_review.image = request.FILES['image']
+    new_review.pub_date = timezone.now()
+    new_review.save()
+    return redirect('detail', id)
