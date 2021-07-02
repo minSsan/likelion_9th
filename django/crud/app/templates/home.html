@@ -1,17 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME</title>
-</head>
-<body>
-    {% for i in blogs %}
-        <p>{{i.title}}</p>
-        <a href="{% url 'detail' i.id %}">more</a>
-    {% endfor %}
-    <br><br>
-    <a href="{% url 'create_page' %}">글 작성하러 가기</a>
-</body>
-</html>
+{% extends 'base.html' %}
+    {% block content %}
+        <!-- posts는 현재 페이지에 담긴 모든 blog 객체들을 담고 있음 -->
+        {% for i in posts %}
+            <div class="card" style="width: 500px; margin: 30px auto;">
+                <div class="card-body">
+                    <h5 class="card-title">{{i.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{i.pub_date}}e</h6>
+                    <p class="card-text">{{i.body}}</p>
+                    <a href="{% url 'detail' i.id %}" class="card-link">more</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div style="text-align: center;">
+            <!-- 만약 현재 페이지에 이전 페이지가 존재한다면(첫 번째 페이지가 아닌 경우) -->
+            {% if posts.has_previous %}
+                <!-- 첫 번째 페이지로 이동하는 a 태그 -->
+                <a href="?page=1"> 첫 페이지 </a>
+                <!-- 이전 페이지로 이동하는 a 태그 -->
+                <a href="?page={{posts.previous_page_number}}"> 이전 페이지 </a>
+            {% endif %}
+            <span>{{posts.number}}/{{posts.paginator.num_pages}}</span>
+            <!-- 만약 다음 페이지가 존재한다면(마지막 페이지가 아닌 경우) -->
+            {% if posts.has_next %}
+                <a href="?page={{posts.next_page_number}}"> 다음 페이지 </a>
+                <a href="?page={{posts.paginator.num_pages}}"> 마지막 페이지 </a>
+            {% endif %}
+            </div>
+        <br><br>
+        <a href="{% url 'create_page' %}">글 작성하러 가기</a>
+    {% endblock %}
