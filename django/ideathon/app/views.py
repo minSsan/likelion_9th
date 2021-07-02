@@ -84,11 +84,10 @@ def getData(request, keyword, addr, place_name):
     # parameters (함수로 만들어질 때 파라미터로 사용 될 변수들임)
     name = place_name.translate(wordChange)
     address = addr.translate(wordChange)
+    address = address.split(" ")[1]
 
     if keyword == '응급실':
         name = name.replace('서울대', '서울대학교').split(" ")[0][:5]
-        address = address.split(" ")[1]
-
 
         # hpid 검색
         xmlUrl = 'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire'
@@ -168,7 +167,6 @@ def getData(request, keyword, addr, place_name):
         return HttpResponse(info)
         
     elif keyword == '약국':
-        address = address.split(" ")[1]
 
         xmlUrl = 'http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire'
         key = unquote('5QlhomHsza06IR+wqKACS07lSsg0Pl9pAzf6jg137KsfPwRnlvGqgdYW/OQunOEnAb+AOYSlEWKVL8HVw93hpg==')
@@ -198,12 +196,64 @@ def getData(request, keyword, addr, place_name):
             data[i] = dataList.get(i, '')
 
         data['keyword'] = keyword
-        
+
         info = json.dumps(data, ensure_ascii=False)
         return HttpResponse(info)
 
     else:
-        pass
+        xmlUrl = 'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncListInfoInqire'
+        key = unquote('5QlhomHsza06IR+wqKACS07lSsg0Pl9pAzf6jg137KsfPwRnlvGqgdYW/OQunOEnAb+AOYSlEWKVL8HVw93hpg==')
+        name = name.replace('서울대', '서울대학교').split(" ")[0][:5]
+        
+        queryParams = '?' + urlencode(
+            {
+                # 항목 코드 : 값
+                quote_plus('ServiceKey') : key, 
+                quote_plus('Q0') : address,
+                #quote_plus('Q1') : '분당구',
+                quote_plus('QN') : name,
+            }
+        )   
+
+        # xml 파싱
+        response = requests.get(xmlUrl + queryParams).text.encode('utf-8')
+
+        xmlDictPre = xmltodict.parse(response)
+        xmlJsonPre = json.dumps(xmlDictPre)
+        xmlDict = json.loads(xmlJsonPre)
+        dataList = xmlDict['response']['body']['items']['item']
+
+        if type(dataList) == dict:
+            hpid = dataList['hpid']
+        else :
+            hpid = dataList[0]['hpid']
+
+        xmlUrl = 'http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire'
+
+        queryParams = '?' + urlencode(
+            {
+                # 항목 코드 : 값
+                quote_plus('ServiceKey') : key, 
+                quote_plus('HPID') : hpid,
+            }
+        )
+        response = requests.get(xmlUrl + queryParams).text.encode('utf-8')
+
+        xmlDictPre = xmltodict.parse(response)
+        xmlJsonPre = json.dumps(xmlDictPre)
+        xmlDict = json.loads(xmlJsonPre)
+        dataList = xmlDict['response']['body']['items']['item']
+
+        getList = ['dutyAddr', 'dutyName', 'dutyTel1', 'dutyTime1c', 'dutyTime1s', 'dutyTime2s','dutyTime2c', 'dutyTime3s', 'dutyTime3c', 'dutyTime4s', 'dutyTime4c', 'dutyTime5s', 'dutyTime5c', 'dutyTime6s', 'dutyTime6c', 'dutyTime7s', 'dutyTime7c', 'dutyTime8c','dutyTime8s', 'dutymapimg', 'dgidIdName', 'dutyInf']
+        data = {}
+
+        for i in getList :
+            data[i] = dataList.get(i, '')
+
+        data['keyword'] = keyword
+
+        info = json.dumps(data, ensure_ascii=False)
+        return HttpResponse(info)
 
 
 def makedb(request): #데이터 생성함수 http://127.0.0.1:8000/makedb 로 접속하여 생성

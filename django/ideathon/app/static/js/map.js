@@ -172,7 +172,8 @@ function getListItem(index, places) {
     if (places.road_address_name) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var road_address_name = `${places.road_address_name}`.replace(/ /g, "+");
-        box.onclick = function() { 
+        box.onclick = function(event) {
+            event.stopPropagation() 
             map.panTo(markerPosition);
             getData(road_address_name,place_name);
         }
@@ -182,7 +183,8 @@ function getListItem(index, places) {
     } else {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var address_name = `${places.address_name}`.replace(/ /g, "+");
-        box.onclick = function() { 
+        box.onclick = function(event) { 
+            event.stopPropagation()
             map.panTo(markerPosition);
             getData(address_name,place_name);
         }
@@ -293,17 +295,22 @@ function displayMarker(locPosition) {
 // map 페이지에서 키워드 검색 함수
 var searchButton = document.querySelector('.search_button')
 
-/*
+
 function startSearch(value) {
+    detail.style.display = 'none'
+    document.getElementById("placesList").style.display = "block";
+    document.getElementById("placesList-detail-emer").style.display = "none";
+    document.getElementById("placesList-detail-phar").style.display = "none";
+    nullList.style.display = 'none'
     searchPlaces(value);
 };
 
+/*
 searchButton.addEventListener('click', function() {
     var keyword = document.getElementById("searchKeyword").value;
     startSearch(keyword);
 });
 */
-
 // httpRequest로 크롤링된 데이터 json형식으로 수신
 function getData(addr, name) {
     var httpRequest = new XMLHttpRequest();
@@ -315,7 +322,8 @@ function getData(addr, name) {
             detailData = JSON.parse(httpRequest.response);
             showListDetail(detailData, name, addr);
         } else if (this.status != 200){ 
-            alert('오류가 발생하였습니다. ' +  this.statusText );
+            nullList.style.display = 'block';
+            returnToList.style.display = "block";
         }
     };
     httpRequest.send()
@@ -331,7 +339,6 @@ function showListDetail(data, name, addr) {
     } else if (data.keyword) {
         // 동기처리 - detail창 요소 구성 전까지 노출되지 않음.
         new Promise((resolve, reject) => {
-            console.log(data)
             createDetailBox(data, name, addr)
             resolve()
         })
@@ -344,7 +351,7 @@ function showListDetail(data, name, addr) {
             } else {
                 detail.style.display = "block";
             }
-            
+            document.getElementById("placesList").style.display = "none";
         })
         .catch((error) => {
             console.log(error)
@@ -394,13 +401,27 @@ function createDetailBox(data, name, addr) {
         document.querySelector('.dutyTime8').innerText = data.dutyTime8s.slice(0,2) +':'+ data.dutyTime8s.slice(2,5) +"~"+data.dutyTime8c.slice(0,2) +':'+ data.dutyTime8c.slice(2,5)
 
     } else {
+        var dgid = data.dgidIdName.replace(/\,/g, ' ')
+        document.querySelector('.htitle').innerText = name
+        document.querySelector('.haddr').innerText = data.dutyAddr
+        document.querySelector('.hTele').innerText = data.dutyTel1
+        document.querySelector('.hdgid').innerText = dgid
 
+        document.querySelector('.hdutyTime1').innerText = data.dutyTime1s.slice(0,2) +':'+ data.dutyTime1s.slice(2,5) +"~"+data.dutyTime1c.slice(0,2) +':'+ data.dutyTime1c.slice(2,5)
+        document.querySelector('.hdutyTime2').innerText = data.dutyTime2s.slice(0,2) +':'+ data.dutyTime2s.slice(2,5) +"~"+data.dutyTime2c.slice(0,2) +':'+ data.dutyTime2c.slice(2,5)
+        document.querySelector('.hdutyTime3').innerText = data.dutyTime3s.slice(0,2) +':'+ data.dutyTime3s.slice(2,5) +"~"+data.dutyTime3c.slice(0,2) +':'+ data.dutyTime3c.slice(2,5)
+        document.querySelector('.hdutyTime4').innerText = data.dutyTime4s.slice(0,2) +':'+ data.dutyTime4s.slice(2,5) +"~"+data.dutyTime4c.slice(0,2) +':'+ data.dutyTime4c.slice(2,5)
+        document.querySelector('.hdutyTime5').innerText = data.dutyTime5s.slice(0,2) +':'+ data.dutyTime5s.slice(2,5) +"~"+data.dutyTime5c.slice(0,2) +':'+ data.dutyTime5c.slice(2,5)
+        document.querySelector('.hdutyTime6').innerText = data.dutyTime6s.slice(0,2) +':'+ data.dutyTime6s.slice(2,5) +"~"+data.dutyTime6c.slice(0,2) +':'+ data.dutyTime6c.slice(2,5)
+        document.querySelector('.hdutyTime7').innerText = data.dutyTime7s.slice(0,2) +':'+ data.dutyTime7s.slice(2,5) +"~"+data.dutyTime7c.slice(0,2) +':'+ data.dutyTime7c.slice(2,5)
+        document.querySelector('.hdutyTime8').innerText = data.dutyTime8s.slice(0,2) +':'+ data.dutyTime8s.slice(2,5) +"~"+data.dutyTime8c.slice(0,2) +':'+ data.dutyTime8c.slice(2,5)
     }
 }
 
 returnToList.addEventListener('click', function() {
     this.style.display = 'none'
     detail.style.display = 'none'
+    document.getElementById("placesList").style.display = "block";
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
     nullList.style.display = 'none'
