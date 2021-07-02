@@ -9,22 +9,25 @@
 {% block content %}
     <div class="sort-navbar">
         <div class="dropdown button">
-            <select class="kw btn btn-secondary dropdown-toggle" id="dropdownMenuButton1">
+            <select class="kw btn btn-secondary" id="dropdownMenuButton1">
                 <option value="" {% if kw == '' %}selected{% endif %} disabled hidden>진료과목</option>
                 <option value="내과" {% if kw == '내과' %}selected{% endif %}>내과</option>
                 <option value="외과" {% if kw == '외과' %}selected{% endif %}>외과</option>
                 <option value="정형" {% if kw == '정형' %}selected{% endif %}>정형외과</option>
                 <option value="치과" {% if kw == '치과' %}selected{% endif %}>치과</option>
             </select>
-    
-            <button class="op btn btn-secondary" value="child" {% if op == 'child' %}disabled{% endif %}>어린이 전용</button>
+            {% if op == 'child'  %}
+                <button class="op btn btn-secondary adult" value="">전체 진료</button>
+            {% else %}
+                <button class="op btn btn-secondary child" value="child">소아 진료</button>
+            {% endif %}
             <button class="op2 btn btn-secondary" value="" {% if op == '' and kw == '' %}disabled{% endif %}>전체 목록</button>
         </div>
     </div>
 
     <div class="list-container">
         {% for p in posts %}
-        <a href="{% url 'info_list_detail' p.id %}" class="card" onclick="createModal()">
+        <a href="{% url 'info_list_detail' p.id %}" class="card">
             <div class="card-header">
                 {{p.Name}}
             </div>
@@ -48,19 +51,20 @@
 
         <div class="page-num-container">
             {% if posts.has_previous %}
-            <a href="?page={{posts.previous_page_number}}" class="btn btn-outline-secondary">Previous</a>
+            <a href="#" data-page="{{ posts.previous_page_number }}" class="btn btn-outline-secondary page-link">Previous</a>
             {% endif %}
 
-            <a href="?page={{posts.number}}" class="btn btn-outline-secondary">{{posts.number}}</a>
+            <a href="#" data-page="{{ page_number }}" class="btn btn-outline-secondary page-link">{{posts.number}}</a>
             
             {% if posts.has_next %}
-            <a href="?page={{posts.next_page_number}}" class="btn btn-outline-secondary">Next</a>
+            <a href="#" data-page="{{ posts.next_page_number }}" class="btn btn-outline-secondary page-link">Next</a>
             {% endif %}
         </div>
 
         <form id="searchForm" method="get" action="{% url 'info_list' %}">
             <input type="hidden" id="kw" name="kw" value="{{ kw }}">
             <input type="hidden" id="op" name="op" value="{{ op }}">
+            <input type='hidden' id='page' name='page' value="{{ page }}">
         </form>
     </div>
     <script type="text/javascript" src="{% static 'js/info_list.js' %}"></script>

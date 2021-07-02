@@ -26,6 +26,8 @@ class hospital(models.Model):
     Satc = models.TextField(blank=True, null=True)
     Suno = models.TextField(blank=True, null=True)
     Sunc = models.TextField(blank=True, null=True)
+    Holo = models.TextField(blank=True, null=True)
+    Holc = models.TextField(blank=True, null=True)
     Hpid = models.TextField()
     Etc = models.TextField(blank=True, null=True)
     Info = models.TextField(blank=True, null=True)

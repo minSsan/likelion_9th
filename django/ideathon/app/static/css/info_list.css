@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+.page-num-container {
+    display: flex;
+    flex-direction: row;
+}
+
 .list-container {
     width: 72.4vw;
     margin: 30px auto;
@@ -29,4 +34,9 @@
     width: 100%;
     margin: 15px 0;
     color: #000000;
+}
+
+#dropdownMenuButton1 {
+    width: auto;
+    height: 38px;
 }
