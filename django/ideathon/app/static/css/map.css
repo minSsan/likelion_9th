@@ -34,7 +34,9 @@
     width: 100vw;
     border-bottom: 1px solid #707070;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding-right: 1vw;
+    padding-left: 1vw;
 }
 
 .sort-navbar > .button {
@@ -45,4 +47,8 @@
 
 .sort-navbar > .button > button {
     margin-left: 2px;
+}
+
+.search-bar {
+    width: 15vw;
 }

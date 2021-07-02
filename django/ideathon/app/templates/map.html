@@ -12,7 +12,14 @@
         {% endblock %}
     </head>
     {% block content %}
-    <div class="sort-navbar">
+    <div class="sort-navbar">  
+        <div></div>
+        {% if keyword != '응급실' and keyword != '약국' %}
+            <div style="margin: auto;">
+                <input class="search-bar" type="text" id="searchKeyword" autofocus onkeypress="if( event.keyCode == 13){startSearch(this.value)}" value='{{ keyword }}'>
+            </div>
+        {% else %}
+        {% endif %}
         <div class="dropdown button">
             <button id="reSearch" class="op btn btn-secondary" value="child" {% if op == 'child' %}disabled{% endif %}>범위 내 재검색</button>
             <button id="nowPlace" class="op2 btn btn-secondary" value="" {% if op == '' and kw == '' %}disabled{% endif %}>현재 위치</button>
@@ -175,13 +182,67 @@
             </div>
 
             <div id="placesList-detail-hos" style="height:100%; display:none;">
+                <h4 class="htitle"></h4>
+                <p class="haddr"></p>
+                <p class="hTele"></p>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">진료과목</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class='hdgid' style="word-break: keep-all;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <h6>영업시간</h6>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">월요일</th>
+                                    <th scope="col">화요일</th>
+                                    <th scope="col">수요일</th>
+                                    <th scope="col">목요일</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class='hdutyTime1'></td>
+                                    <td class='hdutyTime2'></td>
+                                    <td class='hdutyTime3'></td>
+                                    <td class='hdutyTime4'></td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th scope="col">금요일</th>
+                                    <th scope="col" style="color: blue">토요일</th>
+                                    <th scope="col" style="color: red">일요일</th>
+                                    <th scope="col" style="color: red">공휴일</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class='hdutyTime5'></td>
+                                    <td class='hdutyTime6'></td>
+                                    <td class='hdutyTime7'></td>
+                                    <td class='hdutyTime8'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
             </div>
 
             <div id="placesList-Null" style="height:100%; display:none;">
                 <p>조회된 정보가 없습니다.</p>
             </div>
             <hr>
-            <ul id="placesList"></ul>
+            <ul id="placesList" style="display:block;"></ul>
             <div id="pagination"></div>
         </div>
     </div>
