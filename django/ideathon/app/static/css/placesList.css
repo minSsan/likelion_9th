@@ -41,10 +41,9 @@
     min-height: 65px;
 }
 
-#placesList-detail, #placesList-Null{
+#placesList-detail-hos, #placesList-detail-emer, #placesList-Null, #placesList-detail-phar{
     width:100%;
     height: 100%;
-    display: block;
     position: absolute;
     z-index: 100;
     background: #C6C6C6;

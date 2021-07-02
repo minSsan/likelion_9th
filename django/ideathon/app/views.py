@@ -167,122 +167,43 @@ def getData(request, keyword, addr, place_name):
         info = json.dumps(data, ensure_ascii=False)
         return HttpResponse(info)
         
-    else: #크롤링
-        # webdriver 옵션에서 headless 기능을 사용할 것임. headless: 브라우저를 띄우지 않음
-        webdriver_options = webdriver.ChromeOptions()
-        webdriver_options.add_argument('headless')
+    elif keyword == '약국':
+        address = address.split(" ")[1]
 
-        # chromedriver의 경로를 저장.
-        chromedriver = 'E:\chromedriver\chromedriver.exe'
+        xmlUrl = 'http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire'
+        key = unquote('5QlhomHsza06IR+wqKACS07lSsg0Pl9pAzf6jg137KsfPwRnlvGqgdYW/OQunOEnAb+AOYSlEWKVL8HVw93hpg==')
 
-        # headless 옵션으로 드라이버를 호출한다. => 브라우저 화면에 띄우지 않음
-        driver = webdriver.Chrome(chromedriver, options=webdriver_options)
+        queryParams = '?' + urlencode(
+                {
+                    # 항목 코드 : 값
+                    quote_plus('ServiceKey') : key, 
+                    quote_plus('Q1') : address,
+                    quote_plus('QN') : name,
+                    quote_plus('pageNo') : '1',
+                    quote_plus('numOfRows') : '1',
+                }
+            )
 
-        # 테스트용
-        # driver = webdriver.Chrome(executable_path=chromedriver)
+        response = requests.get(xmlUrl + queryParams).text.encode('utf-8')
 
-        wait = WebDriverWait(driver, 5)
+        xmlDictPre = xmltodict.parse(response)
+        xmlJsonPre = json.dumps(xmlDictPre)
+        xmlDict = json.loads(xmlJsonPre)
+        dataList = xmlDict['response']['body']['items']['item']
 
-        driver.implicitly_wait(3)
+        getList = ['dutyAddr', 'dutyName', 'dutyTel1', 'dutyTime1c', 'dutyTime1s', 'dutyTime2s','dutyTime2c', 'dutyTime3s', 'dutyTime3c', 'dutyTime4s', 'dutyTime4c', 'dutyTime5s', 'dutyTime5c', 'dutyTime6s', 'dutyTime6c', 'dutyTime7s', 'dutyTime7c', 'dutyTime8c','dutyTime8s', 'dutymapimg']
+        data = {}
 
-        # 네이버 지도를 브라우저에 실행시킴
-        driver.get("https://map.naver.com/v5/")
+        for i in getList :
+            data[i] = dataList.get(i, '')
 
-        # 검색창 태그를 input_element 라는 변수에 저장함
-        input_element = driver.find_element_by_css_selector('.input_box > input')
-        input_element.send_keys(address + " " + name)
-        input_element.send_keys(Keys.ENTER) # 네이버 지도는 엔터키로 검색이 동작됨. -> Keys.RETURN(ENTER 키) 사용
-
-        # 현재 찾고자 하는 요소는 searchIframe에 존재 => frame을 switch 하는 작업 필요
-        wait.until(ec.frame_to_be_available_and_switch_to_it('searchIframe'))
-
-        # driver.find_element_by_css_selector('#_pcmap_list_scroll_container > ul > li:nth-child(1) > div._7jQRv._2mQIf > div._1uXIN > a').click()
-
-        driver.find_element_by_xpath('/html/body/div[3]/div/div/div[1]/ul/li[1]/div[2]/div[1]/a').send_keys(Keys.ENTER)
-
-        # 위치 정보는 entryIframe에 있기 때문에, 외부 프레임으로 다시 이동한 다음 entryIframe으로 이동시킴
-        driver.switch_to.default_content()
-        wait.until(ec.frame_to_be_available_and_switch_to_it('entryIframe'))
-
-        # description 내용 먼저 펼치기 (<- description 세부 정보를 클릭하면 html 코드가 변경됨)
-        des = driver.find_elements_by_css_selector("a.M_704")
-
-        for i in range(len(des)) :
-            des[i].send_keys(Keys.ENTER)
-
-        driver.find_element_by_css_selector("a._2BDci").send_keys(Keys.ENTER)
-
-        # description을 펼친 상태에서 html을 파싱
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
-        #driver.quit()
-
-        key = []
-        value = []
-
-        key.append('keyword')
-        value.append(keyword)
-
-        key.append('name')
-        value.append(name)
-
-        key.append('address')
-        address += "\n\n"
-        value.append(address)
-
-        try:
-            telephone = soup.select_one('span._3ZA0S').get_text()
-            telephone += "\n\n"
-            key.append('telephone')
-            value.append(telephone)
-        except: # 영업시간 정보가 기재되어 있지 않은 경우
-            key.append('telephone')
-            value.append(' ')
-
-        try:
-            if len(soup.select('span._20pEw')) >= 1 :
-                open_time = ""
-                for i in range(len(soup.select('span._20pEw'))):
-                    open_time += soup.select('span._20pEw')[i].get_text()
-                    open_time += "\n\n"
-            key.append('open_time')
-            value.append(open_time)
-        except: # 영업시간 정보가 기재되어 있지 않은 경우
-            key.append('open_time')
-            value.append(' ')
-
-        try:
-            homepage = soup.select_one('a._1RUzg').get_text()
-            homepage += "\n\n"
-            key.append('homepage')
-            value.append(homepage)
-        except: # 홈페이지가 없는 경우
-            key.append('homepage')
-            value.append(' ')
-
-        try:
-            if len(soup.select('span.WoYOw')) >= 1 :
-                description = ""
-                for i in range(len(soup.select('span.WoYOw'))):
-                    description += soup.select('span.WoYOw')[i].get_text()
-                    description += "\n\n"
-            key.append('description')
-            value.append(description)
-        except: # description 정보가 기재되어있지 않은 경우
-            key.append('description')
-            value.append(' ')
-
-        '''
-        try:
-            table = soup.find('table')
-        except: # 테이블이 없는 경우(약국)
-            table = ""
-        '''
-
-        information = dict(zip(key, value))
-        info = json.dumps(information, ensure_ascii=False)
-
+        data['keyword'] = keyword
+        
+        info = json.dumps(data, ensure_ascii=False)
         return HttpResponse(info)
+
+    else:
+        pass
 
 
 def makedb(request): #데이터 생성함수 http://127.0.0.1:8000/makedb 로 접속하여 생성

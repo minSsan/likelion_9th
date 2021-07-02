@@ -17,7 +17,7 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 var locPosition;
 // view에서 받아온 json파일
 var detailData;
-const detail = document.getElementById('placesList-detail');
+const detail = document.getElementById('placesList-detail-hos');
 const nullList = document.getElementById('placesList-Null');
 const returnToList = document.getElementById('totalList');
 
@@ -337,7 +337,14 @@ function showListDetail(data, name, addr) {
         })
         .then(() => {
             returnToList.style.display = "block";
-            detail.style.display = "block";
+            if (data.keyword == '응급실') {
+                document.getElementById("placesList-detail-emer").style.display = "block";
+            } else if (data.keyword == '약국') {
+                document.getElementById("placesList-detail-phar").style.display = "block";
+            } else {
+                detail.style.display = "block";
+            }
+            
         })
         .catch((error) => {
             console.log(error)
@@ -372,14 +379,29 @@ function createDetailBox(data, name, addr) {
         document.querySelector('.hvctayn').innerText = data.hvctayn
         document.querySelector('.hvmriayn').innerText = data.hvmriayn
         document.querySelector('.dgid').innerText = dgid
+    } else if (data.keyword == '약국') {
+        document.querySelector('.ptitle').innerText = name
+        document.querySelector('.paddr').innerText = data.dutyAddr
+        document.querySelector('.pTele').innerText = data.dutyTel1
+
+        document.querySelector('.dutyTime1').innerText = data.dutyTime1s.slice(0,2) +':'+ data.dutyTime1s.slice(2,5) +"~"+data.dutyTime1c.slice(0,2) +':'+ data.dutyTime1c.slice(2,5)
+        document.querySelector('.dutyTime2').innerText = data.dutyTime2s.slice(0,2) +':'+ data.dutyTime2s.slice(2,5) +"~"+data.dutyTime2c.slice(0,2) +':'+ data.dutyTime2c.slice(2,5)
+        document.querySelector('.dutyTime3').innerText = data.dutyTime3s.slice(0,2) +':'+ data.dutyTime3s.slice(2,5) +"~"+data.dutyTime3c.slice(0,2) +':'+ data.dutyTime3c.slice(2,5)
+        document.querySelector('.dutyTime4').innerText = data.dutyTime4s.slice(0,2) +':'+ data.dutyTime4s.slice(2,5) +"~"+data.dutyTime4c.slice(0,2) +':'+ data.dutyTime4c.slice(2,5)
+        document.querySelector('.dutyTime5').innerText = data.dutyTime5s.slice(0,2) +':'+ data.dutyTime5s.slice(2,5) +"~"+data.dutyTime5c.slice(0,2) +':'+ data.dutyTime5c.slice(2,5)
+        document.querySelector('.dutyTime6').innerText = data.dutyTime6s.slice(0,2) +':'+ data.dutyTime6s.slice(2,5) +"~"+data.dutyTime6c.slice(0,2) +':'+ data.dutyTime6c.slice(2,5)
+        document.querySelector('.dutyTime7').innerText = data.dutyTime7s.slice(0,2) +':'+ data.dutyTime7s.slice(2,5) +"~"+data.dutyTime7c.slice(0,2) +':'+ data.dutyTime7c.slice(2,5)
+        document.querySelector('.dutyTime8').innerText = data.dutyTime8s.slice(0,2) +':'+ data.dutyTime8s.slice(2,5) +"~"+data.dutyTime8c.slice(0,2) +':'+ data.dutyTime8c.slice(2,5)
+
     } else {
 
     }
-
 }
 
 returnToList.addEventListener('click', function() {
     this.style.display = 'none'
     detail.style.display = 'none'
+    document.getElementById("placesList-detail-emer").style.display = "none";
+    document.getElementById("placesList-detail-phar").style.display = "none";
     nullList.style.display = 'none'
 })
