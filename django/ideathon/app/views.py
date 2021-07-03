@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 
 # used in 'makedb : API module'
 from urllib.parse import urlencode, quote_plus, unquote
-
+import xmltodict
 import requests
 
 # used in 'return_details'

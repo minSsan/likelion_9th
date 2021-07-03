@@ -1,7 +1,6 @@
 const searchGrid = document.querySelector('.search-grid')
 const searchButton = searchGrid.querySelectorAll('.search-button')
 
-document.querySelector('.active').setAttribute('class', 'nav-link')
 document.getElementById('ho').setAttribute('class', 'nav-link active')
 
 function startSearch(value) {
@@ -15,6 +14,6 @@ function startSearch(value) {
 
 const searchKeyword = document.getElementById('searchKeyword')
 
-document.querySelector('.search-button').addEventListener('click', function() {
+document.querySelector('.search-bar-button').addEventListener('click', function() {
     startSearch(searchKeyword.value)
 })
