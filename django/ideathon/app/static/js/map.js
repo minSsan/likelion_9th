@@ -161,47 +161,51 @@ function displayPlaces(places) {
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
     var markerPosition = new kakao.maps.LatLng(places.y, places.x);
-    var box = document.createElement('div');
-    var el = document.createElement('li'),
+    var card = document.createElement('div');
+    var el = document.createElement('li');
+
+    card.setAttribute('class', 'card');
+
 
     itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
-                '   <h5 class="info-name">' + places.place_name + '</h5>';
+                '   <h5 class="info-name card-header">' + places.place_name + '</h5>';
 
     if (places.road_address_name) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var road_address_name = `${places.road_address_name}`.replace(/ /g, "+");
-        box.onclick = function(event) {
+        card.onclick = function(event) {
             event.stopPropagation() 
             map.panTo(markerPosition);
             getData(road_address_name,place_name);
         }
-        itemStr += '    <span>' + places.road_address_name + '</span>' +
+        itemStr +=  '<div class="card-body">' +
+                    '    <span>' + places.road_address_name + '</span>' +
                     '   <span class="jibun gray">' +  places.address_name  + '</span>';
         
     } else {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");
         var address_name = `${places.address_name}`.replace(/ /g, "+");
-        box.onclick = function(event) { 
+        card.onclick = function(event) { 
             event.stopPropagation()
             map.panTo(markerPosition);
             getData(address_name,place_name);
         }
 
-        itemStr += '    <span>' +  places.address_name  + '</span>'; 
+        itemStr +=  '<div class="card-body">' +
+                    '<span>' +  places.address_name  + '</span>'; 
     }
 
-    itemStr += '  <span>' + places.phone  + '</span>' +
+    itemStr += '  <span>' + places.phone  + '</span>'  + '</div>' +
                 '</div>';           
 
     el.innerHTML = itemStr;
     el.className = 'item';
-    box.className = 'box';
 
-    box.appendChild(el);
+    card.appendChild(el);
     markerIndex++;
 
-    return box;
+    return card;
 }
 
 
@@ -427,5 +431,16 @@ returnToList.addEventListener('click', function() {
     
     document.getElementById("placesList-detail-emer").style.display = "none";
     document.getElementById("placesList-detail-phar").style.display = "none";
+    nullList.style.display = 'none'
+})
+
+document.getElementById('reSearch').addEventListener('click', function() {
+    detail.style.display = 'none'
+    document.getElementById("placesList").style.display = "block";
+    document.getElementById("pagination").style.display = "block";
+    
+    document.getElementById("placesList-detail-emer").style.display = "none";
+    document.getElementById("placesList-detail-phar").style.display = "none";
+    document.getElementById("totalList").style.display = "none";
     nullList.style.display = 'none'
 })
