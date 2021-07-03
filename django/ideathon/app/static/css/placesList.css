@@ -22,6 +22,10 @@
     margin:10px 0;
 }
 
+.card-header > p {
+    margin: 6px 0 0 0;
+}
+
 #list-container .option button {margin-left:5px;}
 
 #placesList li {list-style: none;}
@@ -53,10 +57,10 @@
 
 #placesList .item span {display: block;margin-top:4px;}
 #placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-#placesList .item .info{padding:10px 0 10px 10px;}
+#placesList .item .info{/*padding:10px 0 10px 10px;*/}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 320px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .markerbg {float:right;width:36px; height:37px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
 
 
 #placesList .item .marker_1 {background-position: 0 -10px;}

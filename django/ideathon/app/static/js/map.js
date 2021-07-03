@@ -167,9 +167,11 @@ function getListItem(index, places) {
     card.setAttribute('class', 'card');
 
 
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-                '<div class="info">' +
-                '   <h5 class="info-name card-header">' + places.place_name + '</h5>';
+    itemStr = '<div class="info">' +
+                '   <h5 class="info-name card-header">' +
+                        '<span class="markerbg marker_' + (index+1) + '"></span>'+ 
+                        '<p>' + places.place_name + '</p>' +
+                    '</h5>';
 
     if (places.road_address_name) {
         var place_name =  `${places.place_name}`.replace(/ /g, "+");

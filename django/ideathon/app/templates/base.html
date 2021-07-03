@@ -24,6 +24,10 @@
             overflow-x: hidden;
         }
 
+        body html {
+            height: 100vh;
+        }
+
         .search-container {
             margin: auto;
         }
@@ -49,6 +53,14 @@
         }
 
     </style>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+        <df-messenger
+        intent="WELCOME"
+        chat-title="응급상황 정보 제공 챗봇 '응급이'"
+        agent-id="60b4e1c5-7de8-41bf-9b0f-60404a42934d"
+        language-code="ko"
+    ></df-messenger>
+
     {% block extrahead %}
     {% endblock %}
 </head>
